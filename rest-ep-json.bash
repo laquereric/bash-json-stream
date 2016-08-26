@@ -1,16 +1,15 @@
 #!/bin/bash
 
-function quit {
-exit
-}
+NAME=` echo $1 | tr -d \" `
+PORT=` echo $2 | tr -d \" | jq -R -c '{port:.}' `
 
-INPUT_JSON=$1
+# Read ML Host from pipeline
 
-# Collect Variables From Input JSON
-NAME=` echo $INPUT_JSON | jq '.name' | tr -d \" `
+read INPUT_JSON;
+
+# Collect Variables From Input JSON `
 HOSTURL_JSON=` echo $INPUT_JSON | jq '.host'| tr -d \" | jq -R -c '{host:.}' `
 USERPW_JSON=` echo $INPUT_JSON | jq '.userpw'| tr -d \" | jq -R -c '{userpw:.}' `
-PORT_JSON=` echo $INPUT_JSON | jq '.port' | tr -d \" | jq -R -c '{port:.}' `
 
 # Create JSON Items
 SERVER="Server"

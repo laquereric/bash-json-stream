@@ -1,10 +1,6 @@
 #!/bin/bash
 
-function quit {
-exit
-}
-
-INPUT_JSON=$1
+read INPUT_JSON;
 
 # Collect Variables From Input JSON
 HOSTURL=` echo $INPUT_JSON | jq '.host'| tr -d \" `
