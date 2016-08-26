@@ -1,0 +1,36 @@
+<export><workspace name="Workspace"><query name="index" focus="false" active="true" content-source="16554544578081600835:0:Apps" mode="xquery">xquery version "1.0-ml";
+declare namespace html = "http://www.w3.org/1999/xhtml";
+
+for $doc in cts:search(//doc,cts:word-query("Doc"))
+    return $doc
+</query><query name="load_db" focus="false" active="true" content-source="16554544578081600835:0:Apps" mode="xquery">xquery version "1.0-ml";
+xdmp:document-insert("ur1_1",&lt;doc&gt;A Doc2&lt;/doc&gt;)</query><query name="load_module" focus="false" active="true" content-source="1906192852195421573:0:Apps" mode="xquery">xquery version "1.0-ml";
+let $mod := &lt;options xmlns="xdmp:document-load"&gt;
+  xquery version "1.0-ml";
+  declare namespace html = "http://www.w3.org/1999/xhtml";
+  for $doc in cts:search(//doc,cts:word-query("Doc"))
+    return $doc
+&lt;/options&gt;
+return
+xdmp:document-insert("/index.xqy",$mod/text())</query><query name="insert index.xqy" focus="false" active="true" content-source="1906192852195421573:0:Apps" mode="xquery">xquery version "1.0-ml";
+let $mod := &lt;options xmlns="xdmp:document-load"&gt;
+  xquery version "1.0-ml";
+  declare namespace html = "http://www.w3.org/1999/xhtml";
+  for $doc in cts:search(//doc,cts:word-query("Doc"))
+    return $doc
+&lt;/options&gt;
+return
+xdmp:document-insert("/index.xqy",$mod/text())</query><query name="insert disable.xqy" focus="true" active="true" content-source="1906192852195421573:0:Apps" mode="xquery">  xquery version "1.0-ml";
+
+  import module namespace admin = "http://marklogic.com/xdmp/admin" 
+		  at "/MarkLogic/admin.xqy";
+
+  let $config := admin:get-configuration()
+  return
+  xdmp:set-request-time-limit(3600),
+  admin:forest-set-enabled($config, admin:forest-get-id($config, "Documents"), 
+      fn:false())
+    
+  =&gt; sets the forest named "Documents" to the disabled state.  
+     Use admin:save-configuration to save the changes to the configuration
+     or pass the configuration to other Admin API functions to make other changes.</query></workspace></export>

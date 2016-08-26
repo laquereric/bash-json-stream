@@ -1,0 +1,254 @@
+2016-07-20 16:25:38.056 Notice: Starting MarkLogic Server 7.0-6.3 x86_64 in /opt/MarkLogic with data in /var/opt/MarkLogic
+2016-07-20 16:25:38.300 Info: Host ip-10-178-208-97.ec2.internal running Linux 4.1.13-19.31.amzn1.x86_64 on Xen
+2016-07-20 16:25:38.909 Info: SSL FIPS mode has been enabled
+2016-07-20 16:25:41.032 Info: Native plugin cache manifest initialized
+2016-07-20 16:25:41.047 Warning: Metering database is not configured - Temporarily disabling usage metering
+2016-07-20 16:25:41.047 Info: Linux Huge Pages: detected 0, recommend 1280
+2016-07-20 16:25:41.187 Info: Linux ext4 mount option 'barrier' is default; recommend faster 'nobarrier' if storage has non-volatile write cache
+2016-07-20 16:25:41.187 Info: Mounted forest Schemas locally on /var/opt/MarkLogic/Forests/Schemas read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.200 Info: Mounted forest Security locally on /var/opt/MarkLogic/Forests/Security read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.215 Info: Mounted forest Extensions locally on /var/opt/MarkLogic/Forests/Extensions read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.240 Info: Mounted forest Last-Login locally on /var/opt/MarkLogic/Forests/Last-Login read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.254 Info: Mounted forest Documents locally on /var/opt/MarkLogic/Forests/Documents read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.267 Info: Mounted forest Modules locally on /var/opt/MarkLogic/Forests/Modules read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.280 Info: Mounted forest Fab locally on /var/opt/MarkLogic/Forests/Fab read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.292 Info: Mounted forest App-Services locally on /var/opt/MarkLogic/Forests/App-Services read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.303 Info: Mounted forest Meters locally on /var/opt/MarkLogic/Forests/Meters read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:41.326 Info: Mounted forest Triggers locally on /var/opt/MarkLogic/Forests/Triggers read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.270 Info: Unmounted forest Extensions
+2016-07-20 16:25:55.271 Info: Unmounted forest Last-Login
+2016-07-20 16:25:55.272 Info: Unmounted forest Documents
+2016-07-20 16:25:55.274 Info: Unmounted forest Schemas
+2016-07-20 16:25:55.275 Info: Unmounted forest Modules
+2016-07-20 16:25:55.276 Info: Unmounted forest Fab
+2016-07-20 16:25:55.277 Info: Unmounted forest Security
+2016-07-20 16:25:55.278 Info: Unmounted forest App-Services
+2016-07-20 16:25:55.280 Info: Unmounted forest Meters
+2016-07-20 16:25:55.281 Info: Unmounted forest Triggers
+2016-07-20 16:25:55.281 Notice: Restarting to reload server configuration
+2016-07-20 16:25:55.313 Notice: Starting MarkLogic Server 7.0-6.3 x86_64 in /opt/MarkLogic with data in /var/opt/MarkLogic
+2016-07-20 16:25:55.318 Info: Host ip-10-178-208-97.ec2.internal running Linux 4.1.13-19.31.amzn1.x86_64 on Xen
+2016-07-20 16:25:55.331 Info: SSL FIPS mode has been enabled
+2016-07-20 16:25:55.744 Info: Native plugin cache manifest initialized
+2016-07-20 16:25:55.748 Info: Linux ext4 mount option 'barrier' is default; recommend faster 'nobarrier' if storage has non-volatile write cache
+2016-07-20 16:25:55.748 Info: Mounted forest Triggers locally on /var/opt/MarkLogic/Forests/Triggers read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.751 Info: Mounted forest Meters locally on /var/opt/MarkLogic/Forests/Meters read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.755 Info: Mounted forest Last-Login locally on /var/opt/MarkLogic/Forests/Last-Login read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.759 Info: Mounted forest App-Services locally on /var/opt/MarkLogic/Forests/App-Services read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.762 Info: Mounted forest Security locally on /var/opt/MarkLogic/Forests/Security read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.765 Info: Mounted forest Schemas locally on /var/opt/MarkLogic/Forests/Schemas read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.769 Info: Mounted forest Fab locally on /var/opt/MarkLogic/Forests/Fab read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.772 Info: Mounted forest Modules locally on /var/opt/MarkLogic/Forests/Modules read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.774 Info: Mounted forest Extensions locally on /var/opt/MarkLogic/Forests/Extensions read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:55.778 Info: Mounted forest Documents locally on /var/opt/MarkLogic/Forests/Documents read write (xvdf ext4 rw,noatime,data=ordered)
+2016-07-20 16:25:56.761 Info: Linux Huge Pages: detected 0, recommend 1280 to 1994
+2016-07-20 16:26:21.771 Info: Unmounted forest Triggers
+2016-07-20 16:26:21.773 Info: Unmounted forest Meters
+2016-07-20 16:26:21.774 Info: Unmounted forest Fab
+2016-07-20 16:26:21.775 Info: Unmounted forest Last-Login
+2016-07-20 16:26:21.777 Info: Unmounted forest App-Services
+2016-07-20 16:26:21.778 Info: Unmounted forest Modules
+2016-07-20 16:26:21.779 Info: Unmounted forest Security
+2016-07-20 16:26:21.780 Info: Unmounted forest Extensions
+2016-07-20 16:26:21.782 Info: Unmounted forest Documents
+2016-07-20 16:26:21.783 Info: Unmounted forest Schemas
+2016-07-20 16:26:21.783 Notice: Restarting to load new group configuration
+2016-07-20 16:26:21.817 Notice: Starting MarkLogic Server 7.0-6.3 x86_64 in /opt/MarkLogic with data in /var/opt/MarkLogic
+2016-07-20 16:26:21.822 Info: Host ip-10-178-208-97.ec2.internal running Linux 4.1.13-19.31.amzn1.x86_64 on Xen
+2016-07-20 16:26:21.855 Info: SSL FIPS mode has been enabled
+2016-07-20 16:26:22.334 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:22.420 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:22.460 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:22.623 Warning: Ignoring phrase-through {http://www.lexis-nexis.com/lncr}coverageend hidden by phrase-through {http://www.lexis-nexis.com/lncr}coverageend
+2016-07-20 16:26:22.623 Warning: Ignoring phrase-through {http://www.lexis-nexis.com/lncr}coveragestart hidden by phrase-through {http://www.lexis-nexis.com/lncr}coveragestart
+2016-07-20 16:26:22.635 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/legal/case-summary/1/}headnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/legal/case-summary/1/}headnote
+2016-07-20 16:26:22.809 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:22.937 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:23.177 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/legal/case-summary/1/}headnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/legal/case-summary/1/}headnote
+2016-07-20 16:26:23.255 Warning: Ignoring phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote hidden by phrase-through {http://www.lexisnexis.com/xmlschemas/content/shared/base/1/}footnote
+2016-07-20 16:26:23.403 Info: Native plugin cache manifest initialized
+2016-07-20 16:26:23.612 Info: Linux Huge Pages: detected 0, recommend 2560
+2016-07-20 16:26:24.404 Info: Connected to domestic host ip-10-178-208-218.ec2.internal
+2016-07-20 16:26:24.404 Info: Connected to domestic host ip-10-178-208-156.ec2.internal
+2016-07-20 16:26:24.404 Info: Connected to domestic host ip-10-178-208-242.ec2.internal
+2016-07-20 16:26:24.404 Info: Connected to domestic host ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.443 Info: Mounted forest ALERTS_EXPERT_WITNESS_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.444 Info: Mounted forest UK_PRACTICAL_GUIDANCE_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.445 Info: Mounted forest AU_TOPICS_TAXONOMIES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.446 Info: Mounted forest ALERTS_NZ_LEGISLATION_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.447 Info: Mounted forest NZ_LEGISLATION_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.448 Info: Mounted forest STAGING_DB_CA_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.449 Info: Mounted forest ALERTS_CA_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.451 Info: Mounted forest ENTITY_PROFILE_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.452 Info: Mounted forest PHRASES_US_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.453 Info: Mounted forest ANALYTICAL_MATERIALS_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.454 Info: Mounted forest AU_TOC_DB_F2 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.455 Info: Mounted forest ALERTS_AU_LEGISLATION_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.456 Info: Mounted forest ALERTS_STATUTES_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.457 Info: Mounted forest SOURCES_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.458 Info: Mounted forest LINK_METADATA_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.459 Info: Mounted forest ALERTS_UK_REGULATORY_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.461 Info: Mounted forest ADMIN_MATERIALS_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.462 Info: Mounted forest DSP_DOCKET_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.463 Info: Mounted forest DSP_NEWS_DB_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.464 Info: Mounted forest RECOGNIZE_DB_US_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.465 Info: Mounted forest LML_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.466 Info: Mounted forest ALERTS_NZ_ANALYTICAL_MATERIALS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.467 Info: Mounted forest Statutes_archive_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.468 Info: Mounted forest NZ_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.470 Info: Mounted forest AU_FORMS_DB_F2 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.471 Info: Mounted forest UK_REGULATORY_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.472 Info: Mounted forest PHRASES_CA_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.473 Info: Mounted forest CA_QUANTUMS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.474 Info: Mounted forest LINK_METADATA_DIR_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.475 Info: Mounted forest LS_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.476 Info: Mounted forest ADMIN_CODES_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.477 Info: Mounted forest ENTITLEMENT_FOREST_3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.479 Info: Mounted forest COMPANY_FINANCIAL_DB-1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.480 Info: Mounted forest ALERTS_UK_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.481 Info: Mounted forest BIG_DATA_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.482 Info: Mounted forest ALERTS_UK_FORMS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.483 Info: Mounted forest ALERTS_UK_NEWS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.484 Info: Mounted forest RECOGNIZE_DB_CA_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.485 Info: Mounted forest STAGING_DB_PAC_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.486 Info: Mounted forest STAGING_DB_US_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.488 Info: Mounted forest UK_NAVIGATION_AIDS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.489 Info: Mounted forest SHEP_DB_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.490 Info: Mounted forest CA_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.491 Info: Mounted forest UK_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.492 Info: Mounted forest AU_CASES_DB_F2 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.493 Info: Mounted forest DIRECTORIES_DB-2 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.494 Info: Mounted forest Data_Map_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.495 Info: Mounted forest ADMIN_CODES_F4 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.497 Info: Mounted forest NZ_ANALYTICAL_MATERIALS_DB_F2 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.498 Info: Mounted forest ALERTS_NZ_CASES_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.499 Info: Mounted forest NZ_ANALYTICAL_MATERIALS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.500 Info: Mounted forest ALERTS_UK_NAVIGATION_AIDS_DB_F1 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.501 Info: Mounted forest GEO_F3 remotely on ip-10-178-208-156.ec2.internal
+2016-07-20 16:27:36.502 Info: Mounted forest LINK_METADATA_LNI_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.503 Info: Mounted forest SYND_WORKFLOW_TEST_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.504 Info: Mounted forest SHEP_LOAD_WORKFLOW_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.506 Info: Mounted forest Security remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.507 Info: Mounted forest ADMIN_CODES_F3 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.508 Info: Mounted forest AU_CASES_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.509 Info: Mounted forest SHEP_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.510 Info: Mounted forest DSP_NEWS_DB_F4 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.511 Info: Mounted forest JURY_VERDICTS_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.512 Info: Mounted forest EXPERT_WITNESS_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.513 Info: Mounted forest CA_LEGISLATION_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.515 Info: Mounted forest CASES_ARCHIVE_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.516 Info: Mounted forest ENTITLEMENT_FOREST_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.517 Info: Mounted forest NZ_FORMS_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.518 Info: Mounted forest CA_DICTIONARIES_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.519 Info: Mounted forest UK_ANALYTICAL_MATERIALS_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.520 Info: Mounted forest DSP_DOCKET_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.521 Info: Mounted forest Fab remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.522 Info: Mounted forest ADMIN_MATERIALS_F2 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.524 Info: Mounted forest ANALYTICAL_MATERIALS_F4 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.525 Info: Mounted forest App-Services remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.526 Info: Mounted forest ALERTS_CA_LEGISLATION_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.527 Info: Mounted forest RECOGNIZE_DB_PAC_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.528 Info: Mounted forest Modules_Dev remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.529 Info: Mounted forest BS_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.530 Info: Mounted forest DIRECTORIES_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.531 Info: Mounted forest GEO_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.533 Info: Mounted forest ADMIN_MATERIALS_F4 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.534 Info: Mounted forest ALERT_SHEP_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.535 Info: Mounted forest Schemas remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.536 Info: Mounted forest ALERTS_DIRECTORIES_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.537 Info: Mounted forest Triggers remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.538 Info: Mounted forest PHRASES_PAC_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.539 Info: Mounted forest RECOGNIZE_DB_UK_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.541 Info: Mounted forest STATUTES_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.542 Info: Mounted forest DSP_DOCKET_F4 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.543 Info: Mounted forest ENTITY_PROFILE_F3 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.544 Info: Mounted forest ALERTS_ADMIN_CODES_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.545 Info: Mounted forest CONTENT_METADATA_F2 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.546 Info: Mounted forest Data_Map_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.547 Info: Mounted forest ALERTS_AU_ANALYTICAL_MATERIAL_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.548 Info: Mounted forest ANALYTICAL_MATERIALS_F2 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.549 Info: Mounted forest SYND_WORKFLOW_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.551 Info: Mounted forest Documents remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.552 Info: Mounted forest Extensions remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.553 Info: Mounted forest Modules remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.554 Info: Mounted forest ANALYTICAL_MATERIALS_ARCHIVE_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.555 Info: Mounted forest AU_LEGISLATION_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.556 Info: Mounted forest LINK_METADATA_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.557 Info: Mounted forest AU_FORMS_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.558 Info: Mounted forest Last-Login remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.560 Info: Mounted forest UK_DICTIONARIES_GLOSSARIES_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.561 Info: Mounted forest DSP_NEWS_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.562 Info: Mounted forest Meters remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.563 Info: Mounted forest UK_INDEXES_TABLES_DB_F1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.564 Info: Mounted forest AU_ANALYTICAL_MATERIALS_DB_F2 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.565 Info: Mounted forest ALERTS_ADMIN_MATERIALS_DB-1 remotely on ip-10-178-208-113.ec2.internal
+2016-07-20 16:27:36.566 Info: Mounted forest JURY_INSTRUCTIONS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.567 Info: Mounted forest PHRASES_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.569 Info: Mounted forest ALERTS_JURY_VERDICTS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.570 Info: Mounted forest ALERTS_NZ_FORMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.571 Info: Mounted forest ALERTS_CA_QUANTUMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.572 Info: Mounted forest ANALYTICAL_MATERIALS_F3 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.573 Info: Mounted forest ENTITLEMENT_METADATA_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.574 Info: Mounted forest DSP_NEWS_DB_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.575 Info: Mounted forest TOC_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.576 Info: Mounted forest LINK_METADATA_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.578 Info: Mounted forest RECOGNIZE_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.579 Info: Mounted forest SHEP_DB_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.580 Info: Mounted forest ALERTS_SCIENTIFICNEWS_DB_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.581 Info: Mounted forest BPM_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.582 Info: Mounted forest ALERTS_AU_FORMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.583 Info: Mounted forest Data_Map_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.584 Info: Mounted forest CASES_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.585 Info: Mounted forest ALERTS_BPM_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.587 Info: Mounted forest ALERTS_CA_ANALYTICAL_MATERIAL_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.588 Info: Mounted forest ALERTS_LEGALNEWS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.589 Info: Mounted forest ADMIN_CODES_ARCHIVE_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.590 Info: Mounted forest ALERTS_NEWS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.591 Info: Mounted forest AU_TOC_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.592 Info: Mounted forest CA_FORMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.593 Info: Mounted forest AU_TOPICS_TAXONOMIES_DB_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.594 Info: Mounted forest LINK_METADATA_F4 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.596 Info: Mounted forest ALERTS_COMPANY_FINANCIAL_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.597 Info: Mounted forest ENTITY_PROFILE_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.598 Info: Mounted forest Synd_Data_Map_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.599 Info: Mounted forest ADMIN_MATERIALS_ARCHIVE_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.600 Info: Mounted forest LINK_METADATA_NEWS-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.601 Info: Mounted forest ADMIN_MATERIALS_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.602 Info: Mounted forest GEO_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.603 Info: Mounted forest ALERTS_ANALYTICAL_MATERIALS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.605 Info: Mounted forest ALERTS_CASES_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.606 Info: Mounted forest DSP_DOCKET_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.607 Info: Mounted forest ADMIN_CODES_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.608 Info: Mounted forest ALERTS_JURY_INSTRUCTIONS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.609 Info: Mounted forest DSP_ALERTS_NEWS_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.610 Info: Mounted forest STAGING_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.611 Info: Mounted forest UK_LEGISLATION_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.612 Info: Mounted forest STAGING_DB_UK_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.614 Info: Mounted forest UK_NEWS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.615 Info: Mounted forest ALERTS_FORMS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.616 Info: Mounted forest LEGALNEWS_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.617 Info: Mounted forest CA_ANALYTICAL_MATERIAL_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.618 Info: Mounted forest ALERTS_CA_DICTIONARIES_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.619 Info: Mounted forest ALERTS_CA_FORMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.620 Info: Mounted forest ALERTS_SCIENTIFICNEWS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.621 Info: Mounted forest ALERTS_UK_LEGISLATION_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.622 Info: Mounted forest AU_LEGISLATION_DB_F2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.624 Info: Mounted forest SHEP_ALERT_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.625 Info: Mounted forest ALERTS_CASES_AU_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.626 Info: Mounted forest ALERTS_UK_ANALYTICAL_MATERIALS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.627 Info: Mounted forest ALERTS_UK_INDEXES_TABLES_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.628 Info: Mounted forest SCIENTIFICNEWS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.629 Info: Mounted forest ALERTS_UK_PRACTICAL_GUIDANCE_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.630 Info: Mounted forest ALERTS_UK_DICTIONARIES_GLOSSARIES_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.631 Info: Mounted forest UK_FORMS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.633 Info: Mounted forest FORMS_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.634 Info: Mounted forest PHRASES_DB_UK_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.635 Info: Mounted forest SOURCES_LNI_DB-1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.636 Info: Mounted forest ENTITLEMENT_FOREST_2 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.637 Info: Mounted forest AU_NZ_LEGAL_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.638 Info: Mounted forest DSP_ALERTS_WEB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.639 Info: Mounted forest CONTENT_METADATA_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:27:36.640 Info: Mounted forest AU_ANALYTICAL_MATERIALS_DB_F1 remotely on ip-10-178-208-242.ec2.internal
+2016-07-20 16:29:00.706 Info: PerfMeterTask::cleanOldData: deleting : 0
+2016-07-20 16:39:30.735 Info: XDBC_SYNDICATION_WORKFLOW: inside postcleaner
+2016-07-20 16:39:30.735 Info: XDBC_SYNDICATION_WORKFLOW: inside postcleaner
