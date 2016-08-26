@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SHOW_POSITIONAL_PARAMETERS='false'
-SHOW_NAMED_PARAMETERS='false'
+SHOW_INPUT_JSON='true'
+SHOW_NAMED_PARAMETERS='true'
 SHOW_DATA='false'
 SHOW_COMMAND='true'
 RUN_COMMAND='true'
@@ -10,32 +10,28 @@ function quit {
 exit
 }
 
-if [ $SHOW_POSITIONAL_PARAMETERS = 'true' ]; then
-	echo "Positional Parameters"
-	echo '$0 = ' $0
-	echo '$1 = ' $1
-	echo '$2 = ' $2
-	echo '$3 = ' $3
-	echo '$4 = ' $4
+if [ $SHOW_INPUT_JSON = 'true' ]; then
+	echo $1
 fi
 
-script=$0
-HOSTURL=$1
-USERPW=$2
-BASENAME=$3
-PORT=$4
+HOSTURL=`echo $1 | jq '.host'`
+USERPW=`echo $1 | jq '.userpw'`
+NAME=`echo $1 | jq '.name'`
+PORT=`echo $1 | jq '.port'`
 
 if [ $SHOW_NAMED_PARAMETERS = 'true' ]; then
 	echo "Named Parameters"
 	echo SCRIPT = $script
 	echo HOSTURL = $HOSTURL
 	echo USERPW = $USERPW
-	echo BASENAME=$3
+	echo NAME=$NAME
 	echo PORT=$PORT
 fi
 
-if [ "$#" -ne 4 ]; then
-    echo "create-rest-api HOST NAME:PW BASENAME PORT"
+if [ "$#" -ne 1 ]; then
+	echo ./create-rest-ep.sh '{"host":"localhost","userpw":"admin:admin","basename":"TEST","port":"8011"}'
+	HOST=`echo $1 | jq '.host'`
+	echo $HOST
     quit
 fi
 
