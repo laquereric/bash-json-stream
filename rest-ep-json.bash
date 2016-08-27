@@ -8,6 +8,7 @@ PORT=` echo $2 | tr -d \" | jq -R -c '{port:.}' `
 read INPUT_JSON;
 
 # Collect Variables From Input JSON `
+PROPERTIES_JSON=` echo $INPUT_JSON | jq '.properties' | jq -c '{properties:.}'`
 HOSTURL_JSON=` echo $INPUT_JSON | jq '.host'| tr -d \" | jq -R -c '{host:.}' `
 USERPW_JSON=` echo $INPUT_JSON | jq '.userpw'| tr -d \" | jq -R -c '{userpw:.}' `
 
@@ -21,7 +22,7 @@ DATABASE_NAME="$NAME-$DATABASE"
 DATABASE_NAME_JSON=` echo $DATABASE_NAME | jq -R -c '{database_name:.}' `
 
 # Assemble JSON Output
-COMPONENT_LIST=` echo $SERVER_NAME_JSON $DATABASE_NAME_JSON $PORT_JSON $HOSTURL_JSON $USERPW_JSON`
+COMPONENT_LIST=` echo $PROPERTIES_JSON $SERVER_NAME_JSON $DATABASE_NAME_JSON $PORT_JSON $HOSTURL_JSON $USERPW_JSON`
 JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
 JSON=` echo $JSON_COMPONENTS | jq -c '.[0] + .[1] + .[2] + .[3] + .[4] + .[5]' `
 
