@@ -7,12 +7,8 @@ BASEPORT=$2
 read ML_HOST_JSON;
 
 function to_template_item() {
-	COMMAND_B64=$1
-	CURL_COMMAND_JSON=` echo $COMMAND_B64 | jq -R -c '{curl_cmd_64:.}' `
-	PROMPT=$2
-	PROMPT_JSON=` echo $PROMPT | jq -R '{prompt:.}' `
-	LIST=` echo $CURL_COMMAND_JSON $PROMPT_JSON `
-	JSON=` echo $LIST | jq --slurp '.' `
+	COMMAND_JSON=$1
+	PROMPT_JSON=$2
 	ECHO $JSON
 }
 
@@ -22,13 +18,15 @@ USERPW_JSON=` echo $ML_HOST_JSON | jq '.userpw'| tr -d \" | jq -R -c '{userpw:.}
 
 DOCUMENTS_PORT=$BASEPORT
 DOCUMENTS_EP_NAME="$NAME-DOCUMENTS"
-CREATE_DOCUMENTS_EP_CURL_COMMAND=` echo $ML_HOST_JSON | ./rest-ep-json.bash $DOCUMENTS_EP_NAME $DOCUMENTS_PORT | ./rest-ep-curl-command.bash `
-COMMAND_B64=`echo $CREATE_DOCUMENTS_EP_CURL_COMMAND | base64 `
+PROMPT="Create $NAME Document EP"
+PROMPT_JSON=` echo $PROMPT | jq -R '{prompt:.}' `
 
-to_template_item $COMMAND_B64 "Create $NAME Document EP"
-CREATE_DOCUMENTS_EP_TI=$?  
-#echo "$COMMAND_B64"
-echo $CREATE_DOCUMENTS_EP_TI
+CREATE_DOCUMENTS_EP_CURL_COMMAND=` echo $ML_HOST_JSON | ./rest-ep-json.bash $DOCUMENTS_EP_NAME $DOCUMENTS_PORT | ./rest-ep-curl-command.bash `
+CURL_COMMAND_JSON=` echo $CREATE_DOCUMENTS_EP_CURL_COMMAND | jq -R -c '{curl_cmd_64:.}' `
+
+TI_COMPONENTS=` echo $PROMPT_JSON $CURL_COMMAND_JSON| jq --slurp '.' `
+JSON=` echo $TI_COMPONENTS | jq -c '.[0] + .[1]' `
+echo $JSON
 exit
 
 MODULES_PORT=#BASEPORT+1
@@ -39,7 +37,7 @@ CREATE_DOCUMENTS_TI=to_template_item $CREATE_MODULES_EP_CURL_COMMAND "Create $NA
 DEPLOY_PORT=#BASEPORT+2
 DEPLOY_EP_NAME="$NAME-DEPLOY"
 CREATE_DEPLOY_EP_CURL_COMMAND=` echo $ML_HOST_JSON | ./rest-ep-json.bash $DEPLOY_EP_NAME DEPLOY_PORT | ./rest-ep-curl-command.bash `
-CREATE_DOCUMENTS_TI=to_template_item $CREATE_DEPLOY_EP_CURL_COMMAND "Create $NAME Document EP" 
+CREATE_DOCUMENTS_TI=to_template_item $CREATE_DEPLOY_EP_CURL_COMMAND "Create $NAME Document" 
 
 # Connect MODULES database to DOCUMENTS server 
 # Connect DEPLOY database to MODULES server 
