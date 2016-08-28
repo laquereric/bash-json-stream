@@ -10,17 +10,19 @@ USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
 PORT=` echo $INPUT_JSON | jq -r -c '.port' | tr -d \" `
 DATA_JSON=`echo $INPUT_JSON | jq -r -c '{"rest-api":{"name":.name,"database_name":.database_name,"port":.port}}' `
 
+HEADER="Content-Type:application/json"
+
 COMMAND=$(cat <<EOF
 	curl -v -X POST \
 	--anyauth \
 	-u $USERPW \
-	--header "Content-Type:application/json" \
+	--header "$HEADER" \
 	-d '${DATA_JSON}' \
 	http://$HOSTURL:8002/v1/rest-apis
 EOF
 )
-
-COMMAND_JSON=` echo $COMMAND | jq -r -R -c '{command:.}' `
+COMMAND_64=` echo $COMMAND | base64 --wrap=0`
+COMMAND_JSON=` echo $COMMAND_64 | jq -r -c -R '{command:.}' `
 
 # Assemble JSON Output
 COMPONENT_LIST=` echo $PROPERTIES_JSON $COMMAND_JSON`
