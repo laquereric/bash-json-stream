@@ -14,12 +14,7 @@ DOCUMENTS_PORT=$BASEPORT
 DOCUMENTS_EP_NAME="$NAME-DOCUMENTS"
 PROMPT="Create $NAME Document EP"
 
-# Assemble JSON Output
-COMPONENT_LIST=` echo $PROPERTIES_JSON $HOSTURL_JSON $USERPW_JSON`
-JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
-JSON=` echo $JSON_COMPONENTS | jq -c '.[0] + .[1] + .[2]' `
-
-CREATE_DOCUMENTS_EP_COMMAND_JSON=` echo $JSON | ./add-prompt-property.bash "$PROMPT" | ./rest-ep-json.bash $DOCUMENTS_EP_NAME $DOCUMENTS_PORT | ./rest-ep-curl-command.bash `
+CREATE_DOCUMENTS_EP_COMMAND_JSON=` echo $JSON | ./rest-ep-json.bash "$PROMPT" $DOCUMENTS_EP_NAME $DOCUMENTS_PORT | ./rest-ep-curl-command.bash `
 echo $CREATE_DOCUMENTS_EP_COMMAND_JSON
 
 exit
