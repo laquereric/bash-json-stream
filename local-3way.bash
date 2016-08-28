@@ -1,7 +1,10 @@
 #!/bin/bash
 
-ML_HOST_JSON=./ml-host.bash localhost admin:admin 
+HOST="localhost"
+USERPW="admin:admin"
 
-SETUP_SCRIPT_TEMPLATE=` echo $ML_HOST_JSON | jq '{"ml_host":.}' `
+NAME="TEST"
+PORT=8011
 
-| ./rest-ep-json.bash TEST $PORT | ./rest-ep-curl-command.bash
+SETUP_SCRIPT=` ./ml-host.bash $HOST $USERPW | ./3way-ep.bash $NAME $PORT `
+echo $SETUP_SCRIPT
