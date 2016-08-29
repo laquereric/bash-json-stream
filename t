@@ -1,0 +1,1 @@
+echo Create TEST Document EP\r curl -v -X POST --anyauth -u admin:admin --header "Content-Type:application/json" -d '{"rest-api":{"name":"TEST-DOCUMENTS-Server","database_name":"TEST-DOCUMENTS-Database","port":"8011"}}' http://localhost:8002/v1/rest-apis\r
