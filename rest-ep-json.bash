@@ -1,6 +1,8 @@
 #!/bin/bash
 
-PROMPT_JSON=` echo $1 | tr -d \" | jq -R -c '{prompt:.}' `
+PROMPT_64=` echo $1 | tr -d \" `
+PROMPT_64_JSON=` echo $PROMPT_64 | jq -R '{prompt:.}' `
+
 NAME=` echo $2 | tr -d \" `
 PORT_JSON=` echo $3 | tr -d \" | jq -R -c '{port:.}' `
 
@@ -13,7 +15,7 @@ HOSTURL_JSON=` echo $INPUT_JSON | jq '.host'| tr -d \" | jq -R -c '{host:.}' `
 USERPW_JSON=` echo $INPUT_JSON | jq '.userpw'| tr -d \" | jq -R -c '{userpw:.}' `
 
 # Create JSON Items
-PROPERTIES_JSON=` echo $PROMPT_JSON | jq -c '{properties:.}'`
+PROPERTIES_JSON=` echo $PROMPT_64_JSON | jq -c '{properties:.}'`
 SERVER="Server"
 SERVER_NAME="$NAME-$SERVER"
 SERVER_NAME_JSON=` echo $SERVER_NAME | jq -R -c '{name:.}' `

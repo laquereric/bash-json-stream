@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PROPERTIES_JSON=` echo $1 | jq -R '{properties:{prompt:.}}' `
+PROMPT_64=` echo $1 | base64 --wrap=0 `
+PROPERTIES_JSON=` echo $PROMPT_64 | jq -R '{properties:{prompt:.}}' `
 
 # Read ML Host from pipeline
 read ML_HOST_JSON;
