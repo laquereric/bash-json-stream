@@ -16,13 +16,12 @@ USERPW_JSON=` echo $INPUT_JSON | jq '.userpw'| tr -d \" | jq -R -c '{userpw:.}' 
 
 # Create JSON Items
 PROPERTIES_JSON=` echo $PROMPT_64_JSON | jq -c '{properties:.}'`
-SERVER="Server"
-SERVER_NAME="$NAME-$SERVER"
-SERVER_NAME_JSON=` echo $SERVER_NAME | jq -R -c '{name:.}' `
+SERVER_NAME="$NAME-Server"
+SERVER_NAME_JSON=` echo $SERVER_NAME | jq -R -c '{"server-name":.}' `
 
 DATABASE="Database"
 DATABASE_NAME="$NAME-$DATABASE"
-DATABASE_NAME_JSON=` echo $DATABASE_NAME | jq -R -c '{database_name:.}' `
+DATABASE_NAME_JSON=` echo $DATABASE_NAME | jq -R -c '{"content-database":.}' `
 
 # Assemble JSON Output
 COMPONENT_LIST=` echo $PROPERTIES_JSON $SERVER_NAME_JSON $DATABASE_NAME_JSON $PORT_JSON $HOSTURL_JSON $USERPW_JSON`
