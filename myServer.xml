@@ -1,7 +1,0 @@
-<http-server-properties xmlns="http://marklogic.com/manage">
-   <server-name>myServer</server-name>
-   <root>/</root>
-   <port>8088</port>
-   <content-database>Documents</content-database>
-</http-server-properties>
-

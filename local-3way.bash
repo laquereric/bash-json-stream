@@ -3,7 +3,7 @@
 HOST="localhost"
 USERPW="admin:admin"
 
-NAME="TEST"
+NAME="TEST2"
 PORT=8011
 
 SETUP_SCRIPT_GEN=` ./ml-host.bash $HOST $USERPW | ./3way-ep.bash $NAME $PORT | ./to-script-lines.bash `
