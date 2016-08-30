@@ -1,4 +1,4 @@
-#!/bin/bash -
+#!/bin/bash
 
 # see : https://docs.marklogic.com/REST/POST/manage/v2/servers
 
@@ -18,8 +18,8 @@ COMMAND=$(cat <<EOF
 	curl -v -X POST \
 	-u $USERPW \
 	--header "$HEADER" \
-	-d '${DATA_JSON}' \	
-	'http://localhost:8002/manage/v2/servers
+	-d '${DATA_JSON}' \
+	http://localhost:8002/manage/v2/servers
 EOF
 )
 
