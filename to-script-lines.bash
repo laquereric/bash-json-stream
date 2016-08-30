@@ -8,7 +8,9 @@ PROMPT_LINES=` echo $LINE_JSON_STREAM | jq 'select(.path[1] == "properties") | s
 
 COMMAND_LINES=` echo $LINE_JSON_STREAM | jq 'select(.path[1] == "command") | select(.value != null) | {"type":"command", "index":.path[0], "value":.value} ' `
 
-COMMANDS=` echo $PROMPT_LINES $COMMAND_LINES | jq -s '.' | jq 'sort_by(.index) | .[] | (select(.type=="prompt") | @sh "./to-echo.bash \(.value) \n"), (select(.type=="command") | @sh "./to-command.bash \(.value) \n")' `
+SCRIPT=` echo $PROMPT_LINES $COMMAND_LINES | jq -s '.' | jq 'sort_by(.index) | .[] | .value' | while read -r line; do
+	BASH=$(echo $line | tr -d \" | base64 --decode)
+	echo "$BASH;"
+done `
 
-echo $COMMANDS
-
+echo $SCRIPT
