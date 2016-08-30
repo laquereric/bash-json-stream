@@ -7,4 +7,4 @@ while read -r LINE; do
 	COMMAND_LINE=` echo $LINE | jq '. | .command' | tr -d \" | base64 --decode `
 	SCRIPT+=("$COMMAND_LINE")
 done
-printf "%s;\n" "${SCRIPT[@]}"
+printf "%s;" "${SCRIPT[@]}"

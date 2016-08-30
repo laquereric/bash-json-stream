@@ -10,16 +10,16 @@ PROPERTIES_JSON=` echo $INPUT_JSON | jq -c '.properties' | jq -c '{properties:.}
 HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
 USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
 PORT=` echo $INPUT_JSON | jq -r -c '.port' | tr -d \" `
-DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties)| del(.host) | del(.userpw)' `
+DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties)| del(.host) | del(.userpw) | .+{"group-id":"Default"} | .+{"server-type":"http"} | .+{"format":"json"}' `
 # | .+{root:'\' 
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
 	curl -v -X POST \
+	--anyauth
 	-u $USERPW \
-	--header "$HEADER" \
 	-d '${DATA_JSON}' \
-	http://localhost:8002/manage/v2/servers
+	'http://localhost:8002/manage/v2/servers'
 EOF
 )
 
