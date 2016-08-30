@@ -1,5 +1,6 @@
-#!/bin/bash
-#https://docs.marklogic.com/REST/POST/manage/v2/servers
+#!/bin/bash -
+
+# see : https://docs.marklogic.com/REST/POST/manage/v2/servers
 
 read INPUT_JSON;
 
