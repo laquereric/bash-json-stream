@@ -1,12 +1,26 @@
 #!/bin/bash
+# Accepts a HOST URL and a User:Password
+# Contacts the host and parses the response
 
-# Collect Variables From Input JSON
-HOSTURL_JSON=` echo $1 | jq -r -c -R '{host:.}' `
-USERPW_JSON=` echo $2 | jq -r -c -R '{userpw:.}' `
+# Collect Attributes
+HOST=$1
+USERPW=$2
 
-COMPONENT_LIST=` echo $HOSTURL_JSON $USERPW_JSON`
-JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
-JSON=` echo $JSON_COMPONENTS | jq -r -c '.[0] + .[1] + .[2]' `
+PROMPT_64=` echo "echo Fetching Cluster Info from $HOST" | tr -d \" | base64 --wrap=0 `
 
-#Return Output
-echo $JSON
+BASE=` jq -n -r -c --arg HT $HOST '{"host":$HT}' | jq -r -c --arg UP $USERPW '.+{"userpw":$UP}' `
+
+COMMAND=` echo $BASE | ./manage-v2-hosts-get-curl-command.bash | base64 --decode `
+
+# Run Command
+CLUSTER=`eval $COMMAND | jq -r -c '.'`
+
+HOSTS=`echo $CLUSTER | jq -r -c '.["host-default-list"] | .["list-items"] | .["list-item"]' `
+BOOTSTRAP_HOST=`echo $HOSTS | jq -r -c '.[] | select(.roleref=="bootstrap")' `
+
+STATUS=`echo $BASE | jq -r -c --argjson HS $HOSTS '.+{"hosts":$HS}' | jq -r -c --argjson BSH $BOOTSTRAP_HOST '.|.+{"bootstrap-host":$BSH}' `
+
+#STATUS=`eval $COMMAND | jq -r -c --argjson BS $BASE '$BS+{"cluster":.}' `
+
+#echo $BOOTSTRAP_HOST
+echo $STATUS
