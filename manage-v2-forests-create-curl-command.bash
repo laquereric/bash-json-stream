@@ -21,7 +21,7 @@ DATA_JSON=`echo $JSON_IN | jq -r -c '. | del(.properties) | del(.host) | del(.["
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -v -X POST \
+	curl \
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \

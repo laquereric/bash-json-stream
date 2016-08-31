@@ -15,7 +15,7 @@ DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties)| del(.host) | del(.
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -v -X POST \
+	curl -X POST \
 	--anyauth
 	-u $USERPW \
 	-d '${DATA_JSON}' \

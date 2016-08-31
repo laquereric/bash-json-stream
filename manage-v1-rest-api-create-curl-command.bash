@@ -12,19 +12,19 @@ USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
 CONTENT_DATABASE=` echo $INPUT_JSON | jq -r -c '.["content-database"]'| tr -d \" `
 SERVER_NAME=` echo $INPUT_JSON | jq -r -c '.["server-name"]' | tr -d \" `
 
-REST_API_JSON=`echo $INPUT_JSON | jq  -r -c --arg DB $CONTENT_DATABASE  '.+{"database":$DB} | .+{"name":.["server-name"]} | del(.properties) | del(.host) | del(.userpw) | del(.["content-database"]) | del(.["server-name"])' | jq  -r -c --arg SN $SERVER_NAME '.+{"name":$SN}' `
+REST_API_JSON=`echo $INPUT_JSON | jq  -r -c --arg DB $CONTENT_DATABASE  '.+{"database":$DB} | .+{"name":.["server-name"]} | del(.properties) | del(.host) | del(.["target-host"]) | del(.userpw) | del(.["content-database"]) | del(.["server-name"])' | jq  -r -c --arg SN $SERVER_NAME '.+{"name":$SN}' `
 
 DATA_JSON=`jq -n -r -c --argjson RJ $REST_API_JSON '{"rest-api":$RJ}' `
 
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -v -X POST \
+	curl -s \
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \
 	-d '${DATA_JSON}' \
-	'http://${HOSTURL}:8002/manage/v1/rest-api'
+	'http://${HOSTURL}:8002/v1/rest-apis'
 EOF
 )
 

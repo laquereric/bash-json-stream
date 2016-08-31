@@ -10,13 +10,12 @@ PROPERTIES_JSON=` echo $INPUT_JSON | jq -c '.properties' | jq -c '{properties:.}
 HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
 USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
 
-DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties) | del(.host) | del(.userpw) ' `
-# | .+{root:'\'
- 
+DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties) | del(.host) | del(.["target-host"]) | del(.userpw)' `
+
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -v -X POST \
+	curl \
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \

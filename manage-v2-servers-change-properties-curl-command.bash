@@ -11,18 +11,18 @@ HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
 USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
 PORT=` echo $INPUT_JSON | jq -r -c '.port' | tr -d \" `
 SERVER_NAME=` echo $INPUT_JSON | jq -r -c '.["server-name"]' | tr -d \" `
-DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties) | del(.["server-name"]) | del(.host) | del(.userpw)' `
+DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties) | del(.["server-name"]) | del(.["target-host"]) | del(.host) | del(.userpw)' `
 # | .+{root:'\'
  
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -v -X POST \
-	-anyauth
+	curl -X PUT -s \
+	--anyauth
 	-u $USERPW \
-	-F "$HEADER" \
+	-H "$HEADER" \
 	-d '${DATA_JSON}' \
-	'http://${HOSTURL}:8002/manage/v2/servers/$SERVER_NAME/properties'
+	'http://${HOSTURL}:8002/manage/v2/servers/$SERVER_NAME/properties?group-id=Default'
 EOF
 )
 
