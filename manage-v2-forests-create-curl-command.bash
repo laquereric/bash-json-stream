@@ -26,7 +26,7 @@ COMMAND=$(cat <<EOF
 	-u $USERPW \
 	-H "$HEADER" \
 	-d '${DATA_JSON}' \
-	'http://$HOST:8002/manage/v2/forests'
+	'http://${HOSTURL}:8002/manage/v2/forests'
 EOF
 )
 

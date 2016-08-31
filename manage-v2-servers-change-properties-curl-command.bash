@@ -22,7 +22,7 @@ COMMAND=$(cat <<EOF
 	-u $USERPW \
 	-F "$HEADER" \
 	-d '${DATA_JSON}' \
-	'http://localhost:8002/manage/v2/servers/$SERVER_NAME/properties'
+	'http://${HOSTURL}:8002/manage/v2/servers/$SERVER_NAME/properties'
 EOF
 )
 

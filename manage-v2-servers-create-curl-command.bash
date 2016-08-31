@@ -19,7 +19,7 @@ COMMAND=$(cat <<EOF
 	--anyauth
 	-u $USERPW \
 	-d '${DATA_JSON}' \
-	'http://localhost:8002/manage/v2/servers'
+	'http://${HOSTURL}:8002/manage/v2/servers'
 EOF
 )
 

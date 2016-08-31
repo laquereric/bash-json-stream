@@ -17,7 +17,7 @@ COMMAND=$(cat <<EOF
 	curl -s \
 	--anyauth
 	-u $USERPW \
-	'http://localhost:8002/manage/v2/hosts?format=json'
+	'http://${HOSTURL}:8002/manage/v2/hosts?format=json'
 EOF
 )
 

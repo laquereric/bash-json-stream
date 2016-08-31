@@ -21,7 +21,7 @@ COMMAND=$(cat <<EOF
 	-u $USERPW \
 	-H "$HEADER" \
 	-d '${DATA_JSON}' \
-	'http://localhost:8002/manage/v2/databases'
+	'http://${HOSTURL}:8002/manage/v2/databases'
 EOF
 )
 

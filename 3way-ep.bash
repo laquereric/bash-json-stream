@@ -11,6 +11,7 @@ BOOSTRAP_HOST_ID=` echo $JSON_IN | jq -r -c '.["bootstrap-host"] | .idref' `
 
 JSON_OUT=` echo $JSON_IN | jq -r -c '. | del(.["bootstrap-host"]) | del(.hosts)' | jq -r -c --arg HID $BOOSTRAP_HOST_ID '.+{"target-host":$HID}'`
 
+
 CMDS=()
 
 # Create MAIN Server
