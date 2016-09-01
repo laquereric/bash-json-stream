@@ -71,4 +71,14 @@ TO_SERVER_NAME=$MODULE_SERVER_NAME
 PROMPT_64=` echo "echo Connecting $FROM_DATABASE_NAME to $TO_SERVER_NAME" | tr -d \" | base64 --wrap=0 `
 CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $TO_SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg MDN $FROM_DATABASE_NAME '.+{"modules-database":$MDN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-servers-change-properties-curl-command.bash `)
 
+
+PROMPT_64=` echo "echo Setting Collection Lexicon for $DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
+CMDS+=(` echo $DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+
+PROMPT_64=` echo "echo Setting Collection Lexicon for $MODULES_DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
+CMDS+=(` echo $MODULES_DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+
+PROMPT_64=` echo "echo Setting Collection Lexicon for $DEPLOY_DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
+CMDS+=(` echo $DEPLOY_DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+
 printf '%s\n' "${CMDS[@]}"
