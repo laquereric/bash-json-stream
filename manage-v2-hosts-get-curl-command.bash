@@ -5,32 +5,21 @@
 read INPUT_JSON;
 
 # Collect Variables From Input JSON
-PROPERTIES_JSON=` echo $INPUT_JSON | jq -c '.properties' | jq -c '{properties:.}'`
+ML_HOST_CONNECTION=` echo $INPUT_JSON | jq -c '.["ml-host-connection"]' `
 
-HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
-USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
-PORT=` echo $INPUT_JSON | jq -r -c '.port' | tr -d \" `
+HOST=` echo $ML_HOST_CONNECTION | jq -r -c '.host' | tr -d \" `
+USERPW=` echo $ML_HOST_CONNECTION | jq -r -c '.userpw' `
 
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
 	curl -s \
-	--anyauth
+	--anyauth \
+	-H $HEADER \
 	-u $USERPW \
-	'http://${HOSTURL}:8002/manage/v2/hosts?format=json'
+	'http://${HOST}:8002/manage/v2/hosts?format=json'
 EOF
 )
 
 COMMAND_64=` echo $COMMAND | base64 --wrap=0 `
 echo $COMMAND_64
-#COMMAND_JSON=`  | jq -c -R '{command:.}' `
-
-# Assemble JSON Output
-#COMPONENT_LIST=` echo $COMMAND_JSON `
-#JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
-
-#JSON=` echo $JSON_COMPONENTS | jq -c '.[0]' ` 
-# + .[1]' `
-
-#Return Output
-#echo $JSON

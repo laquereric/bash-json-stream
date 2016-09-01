@@ -6,21 +6,41 @@
 HOST=$1
 USERPW=$2
 
-PROMPT_64=` echo "echo Fetching Cluster Info from $HOST" | tr -d \" | base64 --wrap=0 `
+ML_HOST_CONNECTION=` \
+	jq -n -r -c --arg HT $HOST '{"host":$HT}' | \
+	jq -r -c --arg UP $USERPW '.+{"userpw":$UP}' \
+`
 
-BASE=` jq -n -r -c --arg HT $HOST '{"host":$HT}' | jq -r -c --arg UP $USERPW '.+{"userpw":$UP}' `
+HOSTS_GET_DEF=` \
+	jq -n -r -c --argjson MHC $ML_HOST_CONNECTION '{"ml-host-connection":$MHC}' \
+`
 
-COMMAND=` echo $BASE | ./manage-v2-hosts-get-curl-command.bash | base64 --decode `
+COMMAND=` \
+	echo $HOSTS_GET_DEF | \
+	./manage-v2-hosts-get-curl-command.bash | \
+	base64 --decode \
+`
 
 # Run Command
 CLUSTER=`eval $COMMAND | jq -r -c '.'`
 
-HOSTS=`echo $CLUSTER | jq -r -c '.["host-default-list"] | .["list-items"] | .["list-item"]' `
-BOOTSTRAP_HOST=`echo $HOSTS | jq -r -c '.[] | select(.roleref=="bootstrap")' `
+HOSTS=` \
+	echo $CLUSTER | \
+	jq -r -c '.["host-default-list"] | \
+	.["list-items"] | \
+	.["list-item"]' \
+`
 
-STATUS=`echo $BASE | jq -r -c --argjson HS $HOSTS '.+{"hosts":$HS}' | jq -r -c --argjson BSH $BOOTSTRAP_HOST '.|.+{"bootstrap-host":$BSH}' `
+BOOTSTRAP_HOST_ID=` \
+	echo $HOSTS | \
+	jq -r -c '.[] | \
+	select(.roleref=="bootstrap") | \
+	.idref' \
+`
 
-#STATUS=`eval $COMMAND | jq -r -c --argjson BS $BASE '$BS+{"cluster":.}' `
+OUTPUT_JSON=` \
+	jq -n -r -c --argjson MHC $ML_HOST_CONNECTION '.+{"ml-host-connection":$MHC}' | \
+	jq -r -c --argjson BSHI $BOOTSTRAP_HOST_ID '.+{"bootstrap-host-id":$BSHI}' \
+`
 
-#echo $BOOTSTRAP_HOST
-echo $STATUS
+echo $OUTPUT_JSON

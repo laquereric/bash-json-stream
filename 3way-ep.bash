@@ -6,79 +6,108 @@ BASEPORT=$2
 # Read ML Host from pipeline
 read JSON_IN;
 
-#Parse
-BOOSTRAP_HOST_ID=` echo $JSON_IN | jq -r -c '.["bootstrap-host"] | .idref' `
+ML_HOST_CONNECTION=` \
+	echo $JSON_IN | \
+	jq -r -c '.["ml-host-connection"]' \
+`
 
-JSON_OUT=` echo $JSON_IN | jq -r -c '. | del(.["bootstrap-host"]) | del(.hosts)' | jq -r -c --arg HID $BOOSTRAP_HOST_ID '.+{"target-host":$HID}'`
+BOOSTRAP_HOST_ID=` \
+	echo $JSON_IN | \
+	jq -r -c '.["bootstrap-host-id"]' \
+`
 
+TARGET_HOST_ID=BOOSTRAP_HOST_ID
 
 CMDS=()
 
-# Create MAIN Server
-SERVER_NAME="$NAME"
-PORT=$BASEPORT
-
-DATABASE_NAME="$NAME"
-PROMPT_64=` echo "echo Creating $DATABASE_NAME Database" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg DN $DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-databases-create-curl-command.bash `)
-
-FOREST_NAME=$DATABASE_NAME
-PROMPT_64=` echo "echo Creating $FOREST_NAME Forest" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg FN $FOREST_NAME '.+{"forest-name":$FN}' | jq -r -c --arg DN $DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-forests-create-curl-command.bash `)
-
-PROMPT_64=` echo "echo Creating $SERVER_NAME Server" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg DN $DATABASE_NAME '.+{"content-database":$DN}' | jq -r -c --arg PT $PORT '.+{"port":$PT}'| jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v1-rest-api-create-curl-command.bash `)
-
-# Create MODULE Server
-MODULE_SERVER_NAME="$NAME-Modules"
-PORT=$(($BASEPORT+1))
-MODULES_DATABASE_NAME="$NAME-Modules"
-
-PROMPT_64=` echo "echo Creating $MODULES_DATABASE_NAME Database" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg DN $MODULES_DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-databases-create-curl-command.bash `)
-
-MODULES_FOREST_NAME=$MODULES_DATABASE_NAME
-PROMPT_64=` echo "echo Creating $MODULES_FOREST_NAME Forest" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg FN $MODULES_FOREST_NAME '.+{"forest-name":$FN}' | jq -r -c --arg DN $MODULES_DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-forests-create-curl-command.bash `)
-
-PROMPT_64=`echo "echo Creating $MODULE_SERVER_NAME Server" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $MODULE_SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg DN $MODULES_DATABASE_NAME '.+{"content-database":$DN}' | jq -r -c --arg PT $PORT '.+{"port":$PT}'| jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v1-rest-api-create-curl-command.bash `)
-
 # Create DEPLOY Server
+
 DEPLOY_SERVER_NAME="$NAME-Deploy"
-PORT=$(($BASEPORT+2))
-DEPLOY_DATABASE_NAME="$NAME-Deploy"
+DEPLOY_SERVER_PORT=$(($BASEPORT+2))
 
-PROMPT_64=` echo "echo Creating $DEPLOY_DATABASE_NAME Database" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg DN $DEPLOY_DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-databases-create-curl-command.bash `)
+DEPLOY_PROMPT_64=` \
+	echo "echo Creating $DEPLOY_SERVER_NAME Server" | tr -d \" | \
+	base64 --wrap=0 | \
+	jq -R -r -c '{"prompt-64":.}' \
+`
 
-DEPLOY_FOREST_NAME=$DEPLOY_DATABASE_NAME
-PROMPT_64=` echo "echo Creating $DEPLOY_FOREST_NAME Forest" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg FN $DEPLOY_FOREST_NAME '.+{"forest-name":$FN}' | jq -r -c --arg DN $DEPLOY_DATABASE_NAME '.+{"database-name":$DN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-forests-create-curl-command.bash `)
+DEPLOY_REST_API=` \
+	jq -n -r -c --arg SN $DEPLOY_SERVER_NAME '.+{"name":$SN} | .+{"forests-per-host":1}' | \
+	jq -r -c --arg PT $DEPLOY_SERVER_PORT '.+{"port":$PT}' \
+`
 
-PROMPT_64=` echo "echo Creating $DEPLOY_SERVER_NAME Server" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $DEPLOY_SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg DN $DEPLOY_DATABASE_NAME '.+{"content-database":$DN}' | jq -r -c --arg PT $PORT '.+{"port":$PT}'| jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v1-rest-api-create-curl-command.bash `)
+DEPLOY_DEF=` \
+	jq  -n -r -c --argjson MHC $ML_HOST_CONNECTION '{"ml-host-connection":$MHC}' | \
+	jq  -r -c --argjson PR $DEPLOY_PROMPT_64 '.+{"properties":$PR}' | \
+	jq  -r -c --argjson DRA $DEPLOY_REST_API '.+{"rest-api":$DRA}' \
+`
 
-# Connect MODULES database to DOCUMENTS server
-FROM_DATABASE_NAME=$MODULES_DATABASE_NAME
-TO_SERVER_NAME=$SERVER_NAME
-PROMPT_64=`echo "echo Connecting $FROM_DATABASE_NAME to $TO_SERVER_NAME" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $TO_SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg MDN $FROM_DATABASE_NAME '.+{"modules-database":$MDN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-servers-change-properties-curl-command.bash `)
+CMDS+=(` \
+	echo $DEPLOY_DEF | \
+	./manage-v1-rest-api-create-curl-command.bash \
+`)
+#
+# Not needed
+DEPLOY_MODULES_DB_NAME="$DEPLOY_SERVER_NAME-modules"
+DEPLOY_MODULES_FOREST_NAME="$DEPLOY_SERVER_NAME-modules-1"
+# To be USED by Modulee Server
+DEPLOY_DB_NAME="$DEPLOY_SERVER_NAME-modules"
 
-# Connect MODULES database to DOCUMENTS server
-FROM_DATABASE_NAME=$DEPLOY_DATABASE_NAME
-TO_SERVER_NAME=$MODULE_SERVER_NAME
-PROMPT_64=` echo "echo Connecting $FROM_DATABASE_NAME to $TO_SERVER_NAME" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $JSON_OUT | jq -r -c --arg SN $TO_SERVER_NAME '.+{"server-name":$SN}' | jq -r -c --arg MDN $FROM_DATABASE_NAME '.+{"modules-database":$MDN}' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' | ./manage-v2-servers-change-properties-curl-command.bash `)
+# Create MODULES Server
+MODULES_SERVER_NAME="$NAME-Modules"
+MODULES_SERVER_PORT=$(($BASEPORT+1))
 
+MODULES_PROMPT_64=` \
+	echo "echo Creating $MODULES_SERVER_NAME Server" | tr -d \" | \
+	base64 --wrap=0 | \
+	jq -R -r -c '{"prompt-64":.}' \
+`
 
-PROMPT_64=` echo "echo Setting Collection Lexicon for $DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+MODULES_REST_API=` \
+	jq -n -r -c --arg SN $MODULES_SERVER_NAME '.+{"name":$SN} | .+{"forests-per-host":1}' | \
+	jq -r -c --arg CN $DEPLOY_DB_NAME '.+{"modules-database":$CN}' | \
+	jq -r -c --arg PT $MODULES_SERVER_PORT '.+{"port":$PT}' \
+`
 
-PROMPT_64=` echo "echo Setting Collection Lexicon for $MODULES_DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $MODULES_DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+MODULES_DEF=` \
+	jq  -n -r -c --argjson MHC $ML_HOST_CONNECTION '{"ml-host-connection":$MHC}' | \
+	jq  -r -c --argjson PR $MODULES_PROMPT_64 '.+{"properties":$PR}' | \
+	jq  -r -c --argjson DRA $MODULES_REST_API '.+{"rest-api":$DRA}' \
+`
 
-PROMPT_64=` echo "echo Setting Collection Lexicon for $DEPLOY_DATABASE_NAME" | tr -d \" | base64 --wrap=0 `
-CMDS+=(` echo $DEPLOY_DATABASE_NAME | jq -R -r -c 'split(" ") | .[] | {"database-name":.}' | jq -r -c --argjson JO $JSON_OUT '$JO+.' | jq -r -c --arg PR $PROMPT_64 '.+{"properties":{"prompt":$PR}}' |  ./manage-v2-databases-change-properties-curl-command.bash `)
+CMDS+=(` \
+	echo $MODULES_DEF | \
+	./manage-v1-rest-api-create-curl-command.bash \
+`)
+# To be USED by Server
+MODULES_DB_NAME="$MODULES_SERVER_NAME"
+
+# Create Server
+SERVER_NAME="$NAME"
+SERVER_PORT=$(($BASEPORT))
+
+PROMPT_64=` \
+	echo "echo Creating $SERVER_NAME Server" | tr -d \" | \
+	base64 --wrap=0 | \
+	jq -R -r -c '{"prompt-64":.}' \
+`
+
+REST_API=` \
+	jq -n -r -c --arg SN $SERVER_NAME '.+{"name":$SN} | .+{"forests-per-host":1}' | \
+	jq -r -c --arg CN $MODULES_DB_NAME '.+{"modules-database":$CN}' | \
+	jq -r -c --arg PT $SERVER_PORT '.+{"port":$PT}' \
+`
+
+DEF=` \
+	jq  -n -r -c --argjson MHC $ML_HOST_CONNECTION '{"ml-host-connection":$MHC}' | \
+	jq  -r -c --argjson PR $PROMPT_64 '.+{"properties":$PR}' | \
+	jq  -r -c --argjson DRA $REST_API '.+{"rest-api":$DRA}' \
+`
+
+CMDS+=(` \
+	echo $DEF | \
+	./manage-v1-rest-api-create-curl-command.bash \
+`)
 
 printf '%s\n' "${CMDS[@]}"
+exit
