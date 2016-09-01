@@ -1,0 +1,1 @@
+<doc>A Doc2</doc>
