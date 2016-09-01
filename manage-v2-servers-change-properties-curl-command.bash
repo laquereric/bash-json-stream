@@ -1,19 +1,38 @@
 #!/bin/bash
 
-# see : https://docs.marklogic.com/REST/POST/manage/v2/servers
+# see : https://docs.marklogic.com/REST/POST/manage/v2/databases
 
 read INPUT_JSON;
 
 # Collect Variables From Input JSON
-PROPERTIES_JSON=` echo $INPUT_JSON | jq -c '.properties' | jq -c '{properties:.}'`
+NAME=` echo $INPUT_JSON | jq -r -c '.name'`
+ML_HOST_CONNECTION=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["ml-host-connection"]' \
+`
 
-HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
-USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
-PORT=` echo $INPUT_JSON | jq -r -c '.port' | tr -d \" `
-SERVER_NAME=` echo $INPUT_JSON | jq -r -c '.["server-name"]' | tr -d \" `
-DATA_JSON=`echo $INPUT_JSON | jq -r -c '. | del(.properties) | del(.["server-name"]) | del(.["target-host"]) | del(.host) | del(.userpw)' `
-# | .+{root:'\'
- 
+HOSTURL=` \
+	echo $ML_HOST_CONNECTION | \
+	jq -r -c '.host'| \
+	tr -d \"
+`
+
+USERPW=` \
+	echo $ML_HOST_CONNECTION | \
+	jq -r -c '.userpw' | \
+	tr -d \" \
+`
+
+PROPERTIES=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.properties' \
+`
+
+DATA=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.data'
+`
+
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
@@ -21,22 +40,17 @@ COMMAND=$(cat <<EOF
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \
-	-d '${DATA_JSON}' \
-	'http://${HOSTURL}:8002/manage/v2/servers/$SERVER_NAME/properties?group-id=Default'
+	-d '${DATA}' \
+	'http://${HOSTURL}:8002/manage/v2/servers/$NAME/properties?group-id=Default'
 EOF
 )
 
-# Parameters not passed
-# ?group-id=Default'
-
-COMMAND_64=` echo $COMMAND | base64 --wrap=0 `
-COMMAND_JSON=` echo "$COMMAND_64" | jq -c -R '{command:.}' `
-
-# Assemble JSON Output
-COMPONENT_LIST=` echo $PROPERTIES_JSON $COMMAND_JSON `
-JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
-
-JSON=` echo $JSON_COMPONENTS | jq -c '.[0] + .[1]' `
+JSON_OUTPUT=` \
+	echo $COMMAND | \
+	base64 --wrap=0 | \
+	jq -c -R '{"command-64":.}' | \
+	jq -r -c --argjson PR $PROPERTIES '{"properties":$PR}+.' \
+`
 
 #Return Output
-echo $JSON
+echo $JSON_OUTPUT

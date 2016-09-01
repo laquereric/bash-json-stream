@@ -32,8 +32,10 @@ DEPLOY_PROMPT_64=` \
 `
 
 DEPLOY_REST_API=` \
-	jq -n -r -c --arg SN $DEPLOY_SERVER_NAME '.+{"name":$SN} | .+{"forests-per-host":1}' | \
-	jq -r -c --arg PT $DEPLOY_SERVER_PORT '.+{"port":$PT}' \
+	jq -n -r -c --arg SN $DEPLOY_SERVER_NAME '{"name":$SN} ' | \
+	jq -r -c --arg PT $DEPLOY_SERVER_PORT '.+{"port":$PT}' | \
+	jq -r -c '.+{"forests-per-host":1}' | \
+	jq -r -c '.+{"modules-database":1}' \
 `
 
 DEPLOY_DEF=` \
@@ -49,33 +51,6 @@ CMDS+=(` \
 # To be USED by Module Server
 DEPLOY_DB_NAME="$DEPLOY_SERVER_NAME-modules"
 #
-# Remove the DEPLOY server reference to Deploy DB Modules DB
-#
-# Remove the Deploy DB Modules DB that is not needed
-
-DEPLOY_MODULES_DB_NAME="$DEPLOY_SERVER_NAME-modules"
-
-DELETE_PROMPT_64=` \
-	echo "echo Deleting unneeded $DEPLOY_MODULES_DB_NAME Database" | tr -d \" | \
-	base64 --wrap=0 | \
-	jq -R -r -c '{"prompt-64":.}' \
-`
-
-DELETE_DATA=` \
-	jq -n -r -c '{"forest-delete":true}'
-`
-
-DELETE_DEF=` \
-	jq  -n -R -r -c --arg DMDB $DEPLOY_MODULES_DB_NAME '{"name":$DMDB}' | \
-	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+{"ml-host-connection":$MHC}' | \
-	jq  -r -c --argjson PR $DELETE_PROMPT_64 '.+{"properties":$PR}' | \
-	jq  -r -c --argjson DD $DELETE_DATA '.+{"data":$DD}' \
-`
-
-CMDS+=(` \
-	echo $DELETE_DEF | \
-	./manage-v2-databases-delete-curl-command.bash \
-`)
 
 # Create MODULES Server
 MODULES_SERVER_NAME="$NAME-Modules"

@@ -5,13 +5,33 @@
 read INPUT_JSON;
 
 # Collect Variables From Input JSON
-PROPERTIES_JSON=` echo $INPUT_JSON | jq -c '.properties' | jq -c '{properties:.}'`
+NAME=` echo $INPUT_JSON | jq -r -c '.name'`
+ML_HOST_CONNECTION=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["ml-host-connection"]' \
+`
 
-HOSTURL=` echo $INPUT_JSON | jq -r -c '.host'| tr -d \" `
-USERPW=` echo $INPUT_JSON | jq -r -c '.userpw'| tr -d \" `
+HOSTURL=` \
+	echo $ML_HOST_CONNECTION | \
+	jq -r -c '.host'| \
+	tr -d \"
+`
 
-DATABASE_NAME=` echo $INPUT_JSON | jq -r -c '.["database-name"]' | tr -d \" `
-DATA_JSON=`jq -n -r -c '{"collection-lexicon":true}' `
+USERPW=` \
+	echo $ML_HOST_CONNECTION | \
+	jq -r -c '.userpw' | \
+	tr -d \" \
+`
+
+PROPERTIES=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.properties' \
+`
+
+DATA=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.data'
+`
 
 HEADER="Content-Type:application/json"
 
@@ -20,19 +40,17 @@ COMMAND=$(cat <<EOF
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \
-	-d '${DATA_JSON}' \
-	'http://${HOSTURL}:8002/manage/v2/databases/$DATABASE_NAME/properties'
+	-d '${DATA}' \
+	'http://${HOSTURL}:8002/manage/v2/databases/$NAME/properties'
 EOF
 )
 
-COMMAND_64=` echo $COMMAND | base64 --wrap=0 `
-COMMAND_JSON=` echo "$COMMAND_64" | jq -c -R '{command:.}' `
-
-# Assemble JSON Output
-COMPONENT_LIST=` echo $PROPERTIES_JSON $COMMAND_JSON `
-JSON_COMPONENTS=` echo $COMPONENT_LIST | jq --slurp '.' `
-
-JSON=` echo $JSON_COMPONENTS | jq -c '.[0] + .[1]' `
+JSON_OUTPUT=` \
+	echo $COMMAND | \
+	base64 --wrap=0 | \
+	jq -c -R '{"command-64":.}' | \
+	jq -r -c --argjson PR $PROPERTIES '{"properties":$PR}+.' \
+`
 
 #Return Output
-echo $JSON
+echo $JSON_OUTPUT
