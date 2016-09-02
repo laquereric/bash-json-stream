@@ -6,6 +6,7 @@ read INPUT_JSON;
 
 # Collect Variables From Input JSON
 NAME=` echo $INPUT_JSON | jq -r -c '.name'`
+
 ML_HOST_CONNECTION=` \
 	echo $INPUT_JSON | \
 	jq -r -c '.["ml-host-connection"]' \
@@ -21,6 +22,14 @@ USERPW=` \
 	echo $ML_HOST_CONNECTION | \
 	jq -r -c '.userpw' | \
 	tr -d \" \
+`
+RESOURCE_TYPE=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["resource-type"]' \
+`
+PARAMETERS=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["parameters"]' \
 `
 
 PROPERTIES=` \
@@ -41,7 +50,7 @@ COMMAND=$(cat <<EOF
 	-u $USERPW \
 	-H "$HEADER" \
 	-d '${DATA}' \
-	'http://${HOSTURL}:8002/manage/v2/databases/$NAME/properties'
+	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${NAME}/properties'
 EOF
 )
 
