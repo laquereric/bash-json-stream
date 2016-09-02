@@ -27,10 +27,23 @@ RESOURCE_TYPE=` \
 	echo $INPUT_JSON | \
 	jq -r -c '.["resource-type"]' \
 `
-PARAMETERS=` \
+
+PARAMETER_OBJECT_EXISTS=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["parameters"]|length' \
+`
+
+PARAMETERS_OBJECT=` \
 	echo $INPUT_JSON | \
 	jq -r -c '.["parameters"]' \
 `
+
+if [[ $PARAMETER_OBJECT_EXISTS > 0 ]]; then
+	PS=` echo $PARAMETERS_OBJECT | \
+		jq -j -r -c 'to_entries | .[] | "\(.key)=\(.value)&" ' \
+	`
+	PARAMETERS_STRING=` echo "?${PS%?}" `
+fi
 
 PROPERTIES=` \
 	echo $INPUT_JSON | \
@@ -50,7 +63,7 @@ COMMAND=$(cat <<EOF
 	-u $USERPW \
 	-H "$HEADER" \
 	-d '${DATA}' \
-	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${NAME}/properties'
+	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${NAME}/properties${PARAMETERS_STRING}'
 EOF
 )
 

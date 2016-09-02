@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/bash +x
 
-# see : https://docs.marklogic.com/REST/POST/manage/v2/databases
+# see : https://docs.marklogic.com/REST/POST/manage/v2/[RESOURCE TYPE]
 
 read INPUT_JSON;
 
 # Collect Variables From Input JSON
 NAME=` echo $INPUT_JSON | jq -r -c '.name'`
+
 ML_HOST_CONNECTION=` \
 	echo $INPUT_JSON | \
 	jq -r -c '.["ml-host-connection"]' \
@@ -23,25 +24,41 @@ USERPW=` \
 	tr -d \" \
 `
 
+RESOURCE_TYPE=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["resource-type"]' \
+`
+
+PARAMETER_OBJECT_EXISTS=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["parameters"]|length' \
+`
+
+PARAMETERS_OBJECT=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["parameters"]' \
+`
+
+if [[ $PARAMETER_OBJECT_EXISTS > 0 ]]; then
+	PS=` echo $PARAMETERS_OBJECT | \
+		jq -j -r -c 'to_entries | .[] | "\(.key)=\(.value)&" ' \
+	`
+	PARAMETERS_STRING=` echo "?${PS%?}" `
+fi
+
 PROPERTIES=` \
 	echo $INPUT_JSON | \
 	jq -r -c '.properties' \
 `
 
-DATA=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.data'
-`
-
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
-	curl -X PUT -s \
+	curl -s \
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \
-	-d '${DATA}' \
-	'http://${HOSTURL}:8002/manage/v2/servers/$NAME/properties?group-id=Default'
+	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${PARAMETERS_STRING}'
 EOF
 )
 
