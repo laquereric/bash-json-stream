@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# see : https://docs.marklogic.com/REST/POST/manage/v2/databases
+# see : https://docs.marklogic.com/REST/POST/manage/v2/[RESOURCE TYPE]
 
 read INPUT_JSON;
 

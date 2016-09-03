@@ -27,6 +27,20 @@ ARGUMENTS=` \
 #CLUSTER=`eval $COMMAND | jq -r -c '.'`
 CLUSTER=`jq -n -r -c '{}'`
 #
+#HOSTS=` \
+#	echo $CLUSTER | \
+#	jq -r -c '.["host-default-list"] | \
+#	.["list-items"] | \
+#	.["list-item"]' \
+#`
+#
+#BOOTSTRAP_HOST_ID=` \
+#	echo $HOSTS | \
+#	jq -r -c '.[] | \
+#	select(.roleref=="bootstrap") | \
+#	.idref' \
+#`
+
 ML_SERVICE_HOST_CONTEXT=` \
 	jq -n -r -c --argjson ARGS $ARGUMENTS '{"ml-service-host-context":$ARGS}' | \
 	jq -r -c --argjson CL $CLUSTER '.+{"cluster":$CL}' \

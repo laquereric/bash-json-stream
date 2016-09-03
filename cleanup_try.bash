@@ -1,3 +1,15 @@
+LC_DEF=` \
+	jq  -n -r -c --arg NM $DB_NAME '{"name":$NM}' | \
+	jq  -r -c --arg RT "databases" '.+{"resource-type":$RT}' | \
+	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+{"ml-host-connection":$MHC}' | \
+	jq  -r -c --argjson PR $LC_PROMPT_64 '.+{"properties":$PR}' | \
+	jq  -r -c '.+{"parameters":{"a":1}}' | \
+	jq  -r -c --argjson D $LC_DATA '.+{"data":$D}' \
+`
+
+
+
+
 # Remove the DEPLOY server reference to Deploy DB Module
 
 DISCONNECT_PROMPT_64=` \
