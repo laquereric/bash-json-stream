@@ -10,8 +10,8 @@ DEFAULT_SERVICE_DEF=`
 `
 
 DEFAULT_ARGUMENTS=`
-	jq -n -r -c --argjson DMC $DEFAULT_ML_CONNECTION '{"ml-host-connection":$DMC}' |\
-	jq -r -c --argjson DSD $DEFAULT_SERVICE_DEF '.+{"service-def":$DSD}' \
+	echo $DEFAULT_ML_CONNECTION | \
+	jq -r -c --argjson DSD $DEFAULT_SERVICE_DEF '.+$DSD' \
 `
 
 while read -r LINE; do

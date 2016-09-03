@@ -16,16 +16,41 @@ ARGUMENTS=` \
 	jq -r -c --argjson CLA $CL_ARGUMENTS '.|.+$CLA' \
 `
 
+#echo $ARGUMENTS
+#exit
 
-#COMMAND=` \
-#	echo $HOSTS_GET_DEF | \
-#	./manage-v2-hosts-get-curl-command.bash | \
-#	base64 --decode \
-#`
+ML_HOST_CONNECTION=`
+	echo $ARGUMENTS | \
+	jq -r -c '.["ml-service-spec"]'
+`
+
+PARAMETERS=` \
+	jq -n -r -c '{"format":"json"}' \
+`
+
+COMMAND_DEF=` \
+	jq  -n -r -c --arg RT "databases" '{"resource-type":$RT}' | \
+	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+$MHC' | \
+	jq  -r -c --argjson PM $PARAMETERS '.+{"parameters":$PM}' \
+`
+
+COMMAND=` \
+	echo $COMMAND_DEF | \
+	./manage-v2/manage-v2-resources-get-curl-command.bash | \
+	jq  -r -c '.["command-64"]' | \
+	base64 --decode \
+`
 
 # Run Command
-#CLUSTER=`eval $COMMAND | jq -r -c '.'`
-CLUSTER=`jq -n -r -c '{}'`
+RESPONSE=`eval $COMMAND`
+CLUSTER=` \
+	echo $RESPONSE | \
+	jq -R -r -c 'tojson'`
+echo $CLUSTER
+exit
+
+
+#CLUSTER=`jq -n -r -c '{}'`
 #
 #HOSTS=` \
 #	echo $CLUSTER | \
@@ -41,9 +66,9 @@ CLUSTER=`jq -n -r -c '{}'`
 #	.idref' \
 #`
 
-ML_SERVICE_HOST_CONTEXT=` \
-	jq -n -r -c --argjson ARGS $ARGUMENTS '{"ml-service-host-context":$ARGS}' | \
-	jq -r -c --argjson CL $CLUSTER '.+{"cluster":$CL}' \
-`
-
-echo $ML_SERVICE_HOST_CONTEXT
+#ML_SERVICE_HOST_CONTEXT=` \
+#	jq -n -r -c --argjson ARGS $ARGUMENTS '{"ml-service-host-context":$ARGS}' | \
+#	jq -r -c --argjson CL $CLUSTER '.+{"cluster":$CL}' \
+#`
+#
+#echo $ML_SERVICE_HOST_CONTEXT

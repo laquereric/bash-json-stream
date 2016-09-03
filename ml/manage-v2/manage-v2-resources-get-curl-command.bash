@@ -4,8 +4,10 @@
 
 read INPUT_JSON;
 
-# Collect Variables From Input JSON
-NAME=` echo $INPUT_JSON | jq -r -c '.name'`
+RESOURCE_TYPE=` \
+	echo $INPUT_JSON | \
+	jq -r -c '.["resource-type"]' \
+`
 
 ML_HOST_CONNECTION=` \
 	echo $INPUT_JSON | \
@@ -22,11 +24,6 @@ USERPW=` \
 	echo $ML_HOST_CONNECTION | \
 	jq -r -c '.userpw' | \
 	tr -d \" \
-`
-
-RESOURCE_TYPE=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.["resource-type"]' \
 `
 
 PARAMETER_OBJECT_EXISTS=` \
@@ -46,11 +43,6 @@ if [[ $PARAMETER_OBJECT_EXISTS > 0 ]]; then
 	PARAMETERS_STRING=` echo "?${PS%?}" `
 fi
 
-PROPERTIES=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.properties' \
-`
-
 HEADER="Content-Type:application/json"
 
 COMMAND=$(cat <<EOF
@@ -58,15 +50,14 @@ COMMAND=$(cat <<EOF
 	--anyauth
 	-u $USERPW \
 	-H "$HEADER" \
-	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${PARAMETERS_STRING}'
+	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}${PARAMETERS_STRING}'
 EOF
 )
 
 JSON_OUTPUT=` \
 	echo $COMMAND | \
 	base64 --wrap=0 | \
-	jq -c -R '{"command-64":.}' | \
-	jq -r -c --argjson PR $PROPERTIES '{"properties":$PR}+.' \
+	jq -c -R '{"command-64":.}' \
 `
 
 #Return Output
