@@ -16,39 +16,18 @@ ARGUMENTS=` \
 	jq -r -c --argjson CLA $CL_ARGUMENTS '.|.+$CLA' \
 `
 
-#echo $ARGUMENTS
-#exit
-
 ML_HOST_CONNECTION=`
 	echo $ARGUMENTS | \
-	jq -r -c '.["ml-service-spec"]'
+	jq -r -c '.["ml-service-spec"] | .["ml-host-connection"] | {"ml-host-connection":.}'
 `
 
-PARAMETERS=` \
-	jq -n -r -c '{"format":"json"}' \
+RESOURCES=` \
+	echo $ML_HOST_CONNECTION | \
+	./ml-resources-dump.bash \
 `
 
-COMMAND_DEF=` \
-	jq  -n -r -c --arg RT "databases" '{"resource-type":$RT}' | \
-	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+$MHC' | \
-	jq  -r -c --argjson PM $PARAMETERS '.+{"parameters":$PM}' \
-`
-
-COMMAND=` \
-	echo $COMMAND_DEF | \
-	./manage-v2/manage-v2-resources-get-curl-command.bash | \
-	jq  -r -c '.["command-64"]' | \
-	base64 --decode \
-`
-
-# Run Command
-RESPONSE=`eval $COMMAND`
-CLUSTER=` \
-	echo $RESPONSE | \
-	jq -R -r -c 'tojson'`
-echo $CLUSTER
+echo $RESOURCES
 exit
-
 
 #CLUSTER=`jq -n -r -c '{}'`
 #
