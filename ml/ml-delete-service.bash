@@ -1,0 +1,1 @@
+echo {} | ./ml-server-namerefs.bash | jq '.[]|to_entries|.[0].value||select(match(.,/TEST(.*)))/'
