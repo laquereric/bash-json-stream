@@ -63,5 +63,23 @@ DUMPS+=(` \
 
 ##############
 
+FORESTS_COMMAND_DEF=` \
+	jq  -n -r -c --arg RT "forests" '{"resource-type":$RT}' | \
+	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+$MHC' | \
+	jq  -r -c --argjson PM $PARAMETERS '.+{"parameters":$PM}' \
+`
+
+FORESTS_COMMAND=` \
+	echo $FORESTS_COMMAND_DEF | \
+	./manage-v2/manage-v2-resources-get-curl-command.bash | \
+	jq  -r -c '.["command-64"]' | \
+	base64 --decode \
+`
+
+DUMPS+=(` \
+	eval $FORESTS_COMMAND | \
+	jq -R -r -c 'tojson'
+`)
+
 printf '%s ' "${DUMPS[@]}"
 

@@ -21,7 +21,7 @@ ML_HOST_CONNECTION=$ARGUMENTS
 DUMP_STREAM=` \
 	echo $ML_HOST_CONNECTION | \
 	./ml-resources-dump-stream.bash | \
-	jq -s -r -c '.|.[0] + .[1]' \
+	jq -s -r -c '.|.[0] + .[1] + .[2]' \
 `
 
 echo $DUMP_STREAM
