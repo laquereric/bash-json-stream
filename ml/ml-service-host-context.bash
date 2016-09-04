@@ -21,22 +21,16 @@ ML_HOST_CONNECTION=`
 	jq -r -c '.["ml-service-spec"] | .["ml-host-connection"] | {"ml-host-connection":.}'
 `
 
-RESOURCES=` \
+ML_SERVICE_HOST_CONTEXT=` \
 	echo $ML_HOST_CONNECTION | \
-	./ml-resources-dump.bash \
+	./ml-resources-dump.bash | \
+	jq -r -c '.|{"resources":.}' | \
+	jq -r -c --argjson MLH $ML_HOST_CONNECTION '.+{"ml-host-connection":$MLH}' \
 `
 
-echo $RESOURCES
+echo $ML_SERVICE_HOST_CONTEXT
 exit
 
-#CLUSTER=`jq -n -r -c '{}'`
-#
-#HOSTS=` \
-#	echo $CLUSTER | \
-#	jq -r -c '.["host-default-list"] | \
-#	.["list-items"] | \
-#	.["list-item"]' \
-#`
 #
 #BOOTSTRAP_HOST_ID=` \
 #	echo $HOSTS | \
@@ -44,10 +38,3 @@ exit
 #	select(.roleref=="bootstrap") | \
 #	.idref' \
 #`
-
-#ML_SERVICE_HOST_CONTEXT=` \
-#	jq -n -r -c --argjson ARGS $ARGUMENTS '{"ml-service-host-context":$ARGS}' | \
-#	jq -r -c --argjson CL $CLUSTER '.+{"cluster":$CL}' \
-#`
-#
-#echo $ML_SERVICE_HOST_CONTEXT
