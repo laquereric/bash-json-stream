@@ -63,5 +63,9 @@ else
 	`
 fi
 
-echo $SERVER_NAMEREFS
-exit
+PURGE_SERVICE_RESULTS=` \
+	echo $SERVER_NAMEREFS | \
+	jq -r -c '.[]|.["server-nameref"]'
+`
+
+echo $PURGE_SERVICE_RESULTS
