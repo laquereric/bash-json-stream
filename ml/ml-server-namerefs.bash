@@ -1,26 +1,32 @@
 #!/bin/bash
 
-DEFAULT_ARGUMENTS=` \
-	echo {} | \
-	./ml-service-host-context.bash
-`
+CL_SERVICE_HOST_CONTEXT_EXIST=0
 
 while read -r LINE; do
 	CL_ARGUMENTS=` \
 		echo $LINE | \
-		jq -r -c '.'
+		jq -r -c '.' \
+	`
+	CL_SERVICE_HOST_CONTEXT_EXIST=` \
+		echo $CL_ARGUMENTS | \
+		jq -r -c '.["service-host-context"] | length' \
 	`
 done
 
-ARGUMENTS=` \
-	echo $DEFAULT_ARGUMENTS | \
-	jq -r -c --argjson CLA $CL_ARGUMENTS '.|.+$CLA' \
-`
-
-ML_SERVICE_HOST_CONTEXT=$ARGUMENTS
+if [[ $CL_SERVICE_HOST_CONTEXT_EXIST > 0 ]]; then
+	SERVICE_HOST_CONTEXT=` \
+		echo $CL_ARGUMENTS | \
+		jq -r -c '.["service-host-context"]' \
+	`
+else
+	SERVICE_HOST_CONTEXT=` \
+		echo {} | \
+		./ml-service-host-context.bash
+	`
+fi
 
 SERVER_LIST=` \
-	echo $ML_SERVICE_HOST_CONTEXT | \
+	echo $SERVICE_HOST_CONTEXT | \
 	jq -r -c '.resources|.["server-default-list"]|.["list-items"]|.["list-item"]|.[]?|{"server-nameref":.nameref}' | \
 	jq -s '.'
 `
