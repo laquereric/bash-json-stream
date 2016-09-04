@@ -35,13 +35,38 @@ DATABASES_COMMAND=` \
 	base64 --decode \
 `
 
-DATABASES_RESPONSE=`eval $DATABASES_COMMAND`
-
-RESOURCES_DUMP=` \
-	echo $DATABASES_RESPONSE | \
-	jq -R -r -c 'tojson' | \
-	jq -r -c '{"databases":.}' \
+DATABASES_RESPONSE=` \
+	eval $DATABASES_COMMAND | \
+	jq -R -r -c 'tojson'
 `
+
+##############
+
+SERVERS_COMMAND_DEF=` \
+	jq  -n -r -c --arg RT "servers" '{"resource-type":$RT}' | \
+	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+$MHC' | \
+	jq  -r -c --argjson PM $PARAMETERS '.+{"parameters":$PM}' \
+`
+
+SERVERS_COMMAND=` \
+	echo $SERVERS_COMMAND_DEF | \
+	./manage-v2/manage-v2-resources-get-curl-command.bash | \
+	jq  -r -c '.["command-64"]' | \
+	base64 --decode \
+`
+
+SERVERS_RESPONSE=` \
+	eval $SERVERS_COMMAND | \
+	jq -R -r -c 'tojson'
+`
+
+##############
+#
+RESOURCES_DUMP=` \
+	echo $SERVERS_RESPONSE \
+`
+#echo $DATABASES_RESPONSE \
+#jq -r -c --argjson SR $SERVERS_RESPONSE '.+$SR' \
 
 echo $RESOURCES_DUMP
 
