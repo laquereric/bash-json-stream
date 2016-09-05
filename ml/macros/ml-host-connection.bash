@@ -1,7 +1,7 @@
 #!/bin/bash
 # Accepts a HOST URL and a User:Password
 # Contacts the host and parses the response
-#!/bin/bash
+
 CL_ML_HOST_CONNECTION_EXIST=0
 
 while read -r LINE; do
