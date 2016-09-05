@@ -20,7 +20,8 @@ fi
 
 ###
 
-SUB_TEST="resource type override"
+SUB_TEST="OVERRIDE"
+SUB_SUB_TEST="resource type"
 RESPONSE=` \
 	echo '{"resource-type":"databases"}' | \
 	./ml/manage-v2/curl-command/manage-v2-resources-get-curl-command.bash | \
@@ -35,7 +36,7 @@ fi
 
 ###
 
-SUB_TEST="host override"
+SUB_SUB_TEST="host"
 RESPONSE=` \
 	echo '{"ml-host-connection":{"userpw":"orU:orP","host":"orH"}}' | \
 	./ml/manage-v2/curl-command/manage-v2-resources-get-curl-command.bash | \
@@ -47,3 +48,17 @@ if [ "$RESPONSE" != "curl -s --anyauth -u orU:orP -H \"Content-Type:application/
 	echo "Error in $TEST $SUB_TEST $SUB_SUB_TEST: ATTR = $ATTR" 1>&2
 	exit 1
 fi
+
+TEST="MANAGE-V2-RESOURCES-GET"
+SUB_TEST="DEFAULT"
+RESPONSE=` \
+	echo '{}' | \
+	./ml/manage-v2/driver/ml-manage-v2-resources-get.bash \ 
+`
+if [[ "$?" -ne 0 ]]; then
+	echo "Error running $TEST $SUB_TEST" 1>&2
+	exit 1
+fi
+
+echo $RESPONSE
+exit 1

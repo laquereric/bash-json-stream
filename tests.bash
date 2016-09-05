@@ -6,7 +6,7 @@ if [[ "$?" -ne 0 ]]; then
 	exit 1
 fi
 
-RESPONSE=`./test/ml/manage-v2/curl-command/manage-v2-resources-get-curl-command-test.bash`
+RESPONSE=`./test/ml/manage-v2/manage-v2-resources-get-test.bash`
 if [[ "$?" -ne 0 ]]; then
 	echo "Error running $TEST $SUB_TEST: ${RESPONSE}" 1>&2
 	exit 1
