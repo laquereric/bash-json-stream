@@ -25,7 +25,7 @@ ML_SERVICE_HOST_CONTEXT=` \
 	echo $ML_HOST_CONNECTION | \
 	./ml-resources-dump.bash | \
 	jq -r -c '.|{"resources":.}' | \
-	jq -r -c --argjson MLH $ML_HOST_CONNECTION '.+{"ml-host-connection":$MLH} | {"service-host-context":.}' \
+	jq -r -c --argjson MLH $ML_HOST_CONNECTION '.+$MLH | {"service-host-context":.}' \
 `
 
 echo $ML_SERVICE_HOST_CONTEXT

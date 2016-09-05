@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash +x
 
 CL_SERVICE_HOST_CONTEXT_EXIST=0
 CL_SERVER_NAMEREF_EXIST=0
@@ -47,28 +47,21 @@ DATABASE_RECORD=`
 	jq -r -c --arg NR "^${DATABASE_NAMEREF}\$" '.|select(.nameref|tostring|test($NR))' \
 `
 
-ML_HOST_CONNECTION=` \
-	echo $SERVICE_HOST_CONTEXT \
-`
-#| \ jq -r -c '.["ml-host-connection"]'
-
-echo $ML_HOST_CONNECTION
-exit
-
-DATABASE_GP_DEF=` \
-	jq  -n -r -c --arg NM $DATABASE_NAMEREF '{"name":$NM}' | \
+DATABASE_PROPERTIES=` \
+	echo $SERVICE_HOST_CONTEXT | \
+	jq -r -c '.["ml-host-connection"]' | \
+	jq -s '.[0]|{"ml-host-connection":.}' | \
+	jq  -r -c --arg NM $DATABASE_NAMEREF '.+{"name":$NM}' | \
 	jq  -r -c --arg RT "databases" '.+{"resource-type":$RT}' | \
-	jq  -r -c --argjson MHC $ML_HOST_CONNECTION '.+{"ml-host-connection":$MHC}' | \
-	jq  -r -c --argjson PR $DEPLOY_LC_PROMPT_64 '.+{"properties":$PR}' | \
-	jq  -r -c --argjson D $DEPLOY_LC_DATA '.+{"data":$D}' \
+	jq  -r -c '.+{"parameters":{"format":"json"}}' | \
+	./manage-v2/manage-v2-resource-get-properties-curl-command.bash | \
+	jq  -r -c '.["command-64"]' | \
+	base64 -d | \
+	xargs -i -t sh -c "{}" | \
+	jq -R -r -c 'tojson'
 `
-DATABASE_PROPERTIES=``
-CMDS+=(` \
-	echo $DEPLOY_LC_DEF | \
-	./manage-v2-resource-change-properties-curl-command.bash \
-`)
+FOREST_NAMEREFS=`
+	echo $SERVICE_HOST_CONTEXT | \
+	jq -r -c '.|to_entries|.[]|.key' \
 `
-
-echo $DATABASE_RECORD	
-
-echo $PURGE_SERVICE_RESULTS
+echo $FOREST_NAMEREFS
