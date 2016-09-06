@@ -1,5 +1,6 @@
 #!/bin/bash
-
+echo manage-v2-resource-get-properties-curl-command
+exit 1
 TEST="MANAGE-V2-RESOURCES-GET-CURL-COMMAND"
 SUB_TEST="DEFAULT"
 RESPONSE=` \
@@ -13,8 +14,7 @@ if [[ "$?" -ne 0 ]]; then
 	exit 1
 fi
 
-echo $RESPONSE
-exit 1
+
 
 if [ "$RESPONSE" != "curl -s --anyauth -u admin:admin -H \"Content-Type:application/json\" 'http://localhost:8002/manage/v2/servers'" ]; then
 	echo "Error in $TEST $SUB_TEST $SUB_SUB_TEST: ATTR = $ATTR" 1>&2
