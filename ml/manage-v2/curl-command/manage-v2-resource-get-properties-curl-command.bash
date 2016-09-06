@@ -1,57 +1,31 @@
 #!/bin/bash
-
 # see : https://docs.marklogic.com/REST/POST/manage/v2/[RESOURCE TYPE]
 
-read INPUT_JSON;
-
-# Collect Variables From Input JSON
-NAME=` echo $INPUT_JSON | jq -r -c '.name'`
-
-ML_HOST_CONNECTION=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.["ml-host-connection"]' \
-`
-
-HOSTURL=` \
-	echo $ML_HOST_CONNECTION | \
-	jq -r -c '.host'| \
-	tr -d \"
-`
-
-USERPW=` \
-	echo $ML_HOST_CONNECTION | \
-	jq -r -c '.userpw' | \
-	tr -d \" \
-`
-RESOURCE_TYPE=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.["resource-type"]' \
-`
-
-PARAMETER_OBJECT_EXISTS=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.["parameters"]|length' \
-`
-
-PARAMETERS_OBJECT=` \
-	echo $INPUT_JSON | \
-	jq -r -c '.["parameters"]' \
-`
-
-if [[ $PARAMETER_OBJECT_EXISTS > 0 ]]; then
-	PS=` echo $PARAMETERS_OBJECT | \
-		jq -j -r -c 'to_entries | .[] | "\(.key)=\(.value)&" ' \
+while read -r LINE; do
+	CL_ARGUMENTS=` \
+		echo $LINE | \
+		jq -r -c '.' \
 	`
-	PARAMETERS_STRING=` echo "?${PS%?}" `
-fi
+done
 
-HEADER="Content-Type:application/json"
+CL_ENVIRONMENT=` \
+	echo $CL_ARGUMENTS | \
+	./util/command-line-parser.bash \ 
+`
+NAME=`echo $CL_ARGUMENTS | jq '.["name"]' | tr -d \" `
+USERPW=`echo $CL_ENVIRONMENT | jq '.userpw' | tr -d \" `
+HOSTURL=`echo $CL_ENVIRONMENT | jq '.hosturl' | tr -d \" `
+HEADER=`echo $CL_ENVIRONMENT | jq '.header' | tr -d \" `
+RESOURCE_TYPE=`echo $CL_ENVIRONMENT | jq '.["resource-type"]' | tr -d \" `
+PARAMETERS_STRING=`echo $CL_ENVIRONMENT | jq 'if .["parameters-string"] then .["parameters-string"] else "" end' `
+URL=`echo "'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${NAME}/properties${PARAMETERS_STRING}'" | tr -d \" `
 
 COMMAND=$(cat <<EOF
-	curl -X GET -s \
+	curl -s \
 	--anyauth
-	-u $USERPW \
-	-H "$HEADER" \	'http://${HOSTURL}:8002/manage/v2/${RESOURCE_TYPE}/${NAME}/properties${PARAMETERS_STRING}'
+	-u ${USERPW} \
+	-H "$HEADER" \
+	${URL}
 EOF
 )
 
