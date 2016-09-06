@@ -50,7 +50,7 @@ if [ "$RESPONSE" != "curl -s --anyauth -u orU:orP -H \"Content-Type:application/
 fi
 
 TEST="MANAGE-V2-RESOURCES-GET"
-SUB_TEST="DEFAULT_SERVERS"
+SUB_TEST="DEFAULT"
 RESPONSE=` \
 	echo '{}' | \
 	./ml/manage-v2/driver/ml-manage-v2-resources-get.bash \ 
@@ -60,54 +60,15 @@ if [[ "$?" -ne 0 ]]; then
 	exit 1
 fi
 
-RESPONSE_LENGTH=`
-	echo $RESPONSE | \
-	jq 'length' 
-`
+#RESPONSE_KEYS=`
+#	echo $RESPONSE | \
+#	jq -r -c 'to_entries|.[]|.key' | \
+#	jq -s -r -c '.|length' \
+#`
+#echo $RESPONSE_KEYS
+#exit 1
 
-if [[ "$RESPONSE_LENGTH" == 0 ]]; then
-	echo "Error running $TEST $SUB_TEST" 1>&2
-	exit 1
-fi
-
-TEST="MANAGE-V2-RESOURCES-GET"
-SUB_TEST="DATABASES"
-RESPONSE=` \
-	echo '{"resource-type":"databases"}' | \
-	./ml/manage-v2/driver/ml-manage-v2-resources-get.bash \ 
-`
-if [[ "$?" -ne 0 ]]; then
-	echo "Error running $TEST $SUB_TEST" 1>&2
-	exit 1
-fi
-
-RESPONSE_LENGTH=`
-	echo $RESPONSE | \
-	jq 'length' 
-`
-
-if [[ "$RESPONSE_LENGTH" == 0 ]]; then
-	echo "Error running $TEST $SUB_TEST" 1>&2
-	exit 1
-fi
-
-TEST="MANAGE-V2-RESOURCES-GET"
-SUB_TEST="FORESTS"
-RESPONSE=` \
-	echo '{"resource-type":"forests"}' | \
-	./ml/manage-v2/driver/ml-manage-v2-resources-get.bash \ 
-`
-if [[ "$?" -ne 0 ]]; then
-	echo "Error running $TEST $SUB_TEST" 1>&2
-	exit 1
-fi
-
-RESPONSE_LENGTH=`
-	echo $RESPONSE | \
-	jq 'length' 
-`
-
-if [[ "$RESPONSE_LENGTH" == 0 ]]; then
-	echo "Error running $TEST $SUB_TEST" 1>&2
-	exit 1
-fi
+#if [[ $RESPONSE_KEYS == 0 ]]; then
+#	echo "Error running $TEST $SUB_TEST" 1>&2
+#	exit 1
+#fi

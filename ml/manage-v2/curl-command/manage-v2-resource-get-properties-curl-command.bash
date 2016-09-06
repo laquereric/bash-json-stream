@@ -8,11 +8,14 @@ while read -r LINE; do
 	`
 done
 
+NAME=` echo $CL_ARGUMENTS | jq -r -c '.name' | tr -d \" `
+
 CL_ENVIRONMENT=` \
 	echo $CL_ARGUMENTS | \
-	./util/command-line-parser.bash \ 
+	./util/command-line-parser.bash | \
+	jq -r -c --arg NM $NAME '.+{"name":$NM}' \
 `
-NAME=`echo $CL_ARGUMENTS | jq '.["name"]' | tr -d \" `
+
 USERPW=`echo $CL_ENVIRONMENT | jq '.userpw' | tr -d \" `
 HOSTURL=`echo $CL_ENVIRONMENT | jq '.hosturl' | tr -d \" `
 HEADER=`echo $CL_ENVIRONMENT | jq '.header' | tr -d \" `
