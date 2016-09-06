@@ -60,5 +60,12 @@ if [[ "$?" -ne 0 ]]; then
 	exit 1
 fi
 
-echo $RESPONSE
-exit 1
+RESPONSE_LENGTH=`
+	echo $RESPONSE | \
+	jq 'length' 
+`
+
+if [[ "$RESPONSE_LENGTH" == 0 ]]; then
+	echo "Error running $TEST $SUB_TEST" 1>&2
+	exit 1
+fi
